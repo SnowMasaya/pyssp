@@ -4,6 +4,7 @@ import numpy as np
 import scipy.special as spc
 from pyssp.util import sigmoid
 from six.moves import xrange
+import scipy
 
 
 class SpectralSubtruction(object):
@@ -18,7 +19,7 @@ class SpectralSubtruction(object):
         return self.compute_by_noise_pow(signal, n_pow)
 
     def compute_by_noise_pow(self, signal, n_pow):
-        s_spec = np.fft.fftpack.fft(signal * self._window)
+        s_spec = scipy.fftpack.fft(signal * self._window)
         s_amp = np.absolute(s_spec)
         s_phase = np.angle(s_spec)
         amp = s_amp ** 2.0 - n_pow * self._coefficient
@@ -26,7 +27,7 @@ class SpectralSubtruction(object):
         amp = np.sqrt(amp)
         amp = self._ratio * amp + (1.0 - self._ratio) * s_amp
         spec = amp * np.exp(s_phase * 1j)
-        return np.real(np.fft.fftpack.ifft(spec))
+        return np.real(scipy.fftpack.ifft(spec))
 
 
 class SpectrumReconstruction(object):
