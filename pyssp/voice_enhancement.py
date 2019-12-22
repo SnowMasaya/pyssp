@@ -67,7 +67,7 @@ class MMSE_STSA(SpectrumReconstruction):
         super(MMSE_STSA, self).__init__(winsize, window, constant=constant, ratio=ratio, alpha=alpha)
 
     def compute_by_noise_pow(self, signal, n_pow):
-        s_spec = np.fft.fftpack.fft(signal * self._window)
+        s_spec = scipy.fftpack.fft(signal * self._window)
         s_amp = np.absolute(s_spec)
         s_phase = np.angle(s_spec)
         gamma = self._calc_aposteriori_snr(s_amp, n_pow)
@@ -88,7 +88,7 @@ class MMSE_STSA(SpectrumReconstruction):
         amp2 = self._ratio * amp + (1.0 - self._ratio) * s_amp
         self._prevAmp = amp
         spec = amp2 * np.exp(s_phase * 1j)
-        return np.real(np.fft.fftpack.ifft(spec))
+        return np.real(scipy.fftpack.ifft(spec))
 
 
 class MMSE_LogSTSA(SpectrumReconstruction):
@@ -97,7 +97,7 @@ class MMSE_LogSTSA(SpectrumReconstruction):
         super(MMSE_LogSTSA, self).__init__(winsize, window, constant=constant, ratio=ratio, alpha=alpha)
 
     def compute_by_noise_pow(self, signal, n_pow):
-        s_spec = np.fft.fftpack.fft(signal * self._window)
+        s_spec = scipy.fftpack.fft(signal * self._window)
         s_amp = np.absolute(s_spec)
         s_phase = np.angle(s_spec)
         gamma = self._calc_aposteriori_snr(s_amp, n_pow)
@@ -118,7 +118,7 @@ class MMSE_LogSTSA(SpectrumReconstruction):
         amp2 = self._ratio * amp + (1.0 - self._ratio) * s_amp
         self._prevAmp = amp
         spec = amp2 * np.exp(s_phase * 1j)
-        return np.real(np.fft.fftpack.ifft(spec))
+        return np.real(scipy.fftpack.ifft(spec))
 
 
 class JointMap(SpectrumReconstruction):
@@ -128,7 +128,7 @@ class JointMap(SpectrumReconstruction):
         super(JointMap, self).__init__(winsize, window, constant=constant, ratio=ratio, alpha=alpha)
 
     def compute_by_noise_pow(self, signal, n_pow):
-        s_spec = np.fft.fftpack.fft(signal * self._window)
+        s_spec = scipy.fftpack.fft(signal * self._window)
         s_amp = np.absolute(s_spec)
         s_phase = np.angle(s_spec)
         gamma = self._calc_aposteriori_snr(s_amp, n_pow)
@@ -149,4 +149,4 @@ class JointMap(SpectrumReconstruction):
         amp2 = self._ratio * amp + (1.0 - self._ratio) * s_amp
         self._prevAmp = amp
         spec = amp2 * np.exp(s_phase * 1j)
-        return np.real(np.fft.fftpack.ifft(spec))
+        return np.real(scipy.fftpack.ifft(spec))
